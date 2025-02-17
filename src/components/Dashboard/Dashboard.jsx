@@ -2,34 +2,53 @@ import { useContext, useEffect, useState } from 'react';
 
 import { UserContext } from '../../contexts/UserContext';
 
-import * as userService from '../../services/userService'
+import * as productService from '../../services/productService'
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
 
-  const [listOfUsers, setListOfUsers] = useState([])
+  // const [listOfUsers, setListOfUsers] = useState([])
+
+  const [productsList, setProductsList] = useState([])
+
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //       try {
+  //           const fetchedUsers = await userService.index()
+  //           setListOfUsers(fetchedUsers)
+  //       } catch (err) {
+  //           console.log(err)
+  //       }
+  //   }
+
+  //   if (user) fetchUsers()
+  // }, [user])
+
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchingProducts = async () => {
         try {
-            const fetchedUsers = await userService.index()
-            setListOfUsers(fetchedUsers)
+            const fetchedProducts = await productService.index()
+            setProductsList(fetchedProducts)
         } catch (err) {
             console.log(err)
         }
     }
 
-    if (user) fetchUsers()
+    if (user) fetchingProducts()
   }, [user])
 
   return (
     <main>
       <h1>Welcome, {user.username}</h1>
-      <p>
-        This is the dashboard page where you can see a list of all the users.
-      </p>
-      {listOfUsers.map((userObj) => (
-        <h4 key={userObj._id}>{userObj.username}</h4>
+      <h1>SWEET BAHRAIN</h1>
+      <h3>CHOCOLATE</h3>
+
+      {productsList.map((prdObj) => (
+        <>
+        <img src={prdObj.image} alt={prdObj.name} />
+        <h4 key={prdObj._id}>{prdObj.name} BHD {prdObj.price}</h4>
+        </>
       ))}
     </main>
   );
