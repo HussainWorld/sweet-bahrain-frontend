@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import { signUp } from '../../services/authService'
+import SignUpImg from "../../assets/images/SignUp.png"
 
 import { UserContext } from '../../contexts/UserContext'
 
@@ -40,6 +41,7 @@ const SignUpForm = () => {
   return (
     <main>
       <h1>Sign Up</h1>
+      <img src={SignUpImg} />
       <p>{message}</p>
       <form onSubmit={handleSubmit}>
         <div>
