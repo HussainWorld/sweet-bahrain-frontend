@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { signIn } from '../../services/authService';
 
 import { UserContext } from '../../contexts/UserContext';
+import SignInImg from "../../assets/images/SignIn.png"
 
 const SignInForm = () => {
   const navigate = useNavigate();
@@ -36,8 +37,9 @@ const SignInForm = () => {
   return (
     <main>
       <h1>Sign In</h1>
+      <img src={SignInImg} />
       <p>{message}</p>
-      <form autoComplete='off' onSubmit={handleSubmit}>
+      <form autoComplete='off' onSubmit={handleSubmit}>In
         <div>
           <label htmlFor='email'>Username:</label>
           <input
