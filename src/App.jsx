@@ -5,21 +5,21 @@ import SignUpForm from './components/SignUpForm/SignUpForm'
 import Landing from './components/Landing/Landing'
 import SignInForm from './components/SignInForm/SignInForm'
 import Dashboard from './components/Dashboard/Dashboard'
+import Checkout from './components/Checkout/Checkout'
 
 import { UserContext } from './contexts/UserContext'
 
 const App = () => {
-
   const { user } = useContext(UserContext)
 
   return (
     <>
       <NavBar />
       <Routes>
-        {/* if user exists show dashboard otherwise show landing page */}
         <Route path='/' element={user ? <Dashboard /> : <Landing />} />
         <Route path='/sign-in' element={<SignInForm />} />
         <Route path='/sign-up' element={<SignUpForm />} />
+        <Route path='/checkout/:productId' element={<Checkout />} />
       </Routes>
     </>
   )
