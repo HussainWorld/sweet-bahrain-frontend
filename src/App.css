@@ -1,6 +1,14 @@
 body {
   margin: 0; 
 }
+.dashboard-bg {
+  background-image: url('../src/assets/images/Background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
 /* Default Landing Page Background */
 .landing-bg {
   background-image: url("../src/assets/images/Landing.png");

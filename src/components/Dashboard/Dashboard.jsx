@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../contexts/UserContext';
+import { useEffect, useState } from 'react';
+// import { UserContext } from '../../contexts/UserContext';
 // import { ProductContext } from '../../contexts/ProductContext';
 import { useNavigate } from 'react-router';
 import * as productService from '../../services/productService'
 
 const Dashboard = () => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   // const { product } = useContext(ProductContext);
   const [productsList, setProductsList] = useState([]);
   const navigate = useNavigate();
@@ -30,9 +30,6 @@ const Dashboard = () => {
 
   return (
     <main>
-      <h1>Welcome, {user?.username}</h1>
-      <h1>SWEET BAHRAIN</h1>
-      
       {productsList.map((prdObj) => (
         <div 
           key={prdObj._id} 

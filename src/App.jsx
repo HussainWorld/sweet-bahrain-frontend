@@ -17,17 +17,19 @@ const App = () => {
     const body = document.body;
 
     // Remove previous classes
-    body.classList.remove('landing-bg', 'signin-bg', 'signup-bg');
+    body.classList.remove('landing-bg', 'signin-bg', 'signup-bg', 'dashboard-bg');
 
-    // Add the class based on the current route
-    if (location.pathname === '/') {
+    // Add the class based on the current route and auth state
+    if (user) {
+      body.classList.add('dashboard-bg');
+    } else if (location.pathname === '/') {
       body.classList.add('landing-bg');
     } else if (location.pathname === '/sign-in') {
       body.classList.add('signin-bg');
     } else if (location.pathname === '/sign-up') {
       body.classList.add('signup-bg');
     }
-  }, [location.pathname]);
+  }, [location.pathname, user]);
 
   return (
     <>
