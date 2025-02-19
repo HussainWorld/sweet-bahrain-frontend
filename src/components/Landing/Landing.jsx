@@ -1,10 +1,12 @@
-import LandingImg from "../../assets/images/Landing.png"
+// import LandingImg from "../../assets/images/Landing.png"
+import "../../App.css"
+
 
 const Landing = () => {
     return (
         <main>
             <h1>Landing Page</h1>
-            <img src={LandingImg} />
+            {/* <img src={LandingImg} /> */}
         </main>
        
     )
