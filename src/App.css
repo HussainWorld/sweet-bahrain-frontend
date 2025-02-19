@@ -1,12 +1,6 @@
-/* body {
-  background-image: url("../src/assets/images/Landing.png");
-  background-size: cover; 
-  background-position: center; 
-  background-attachment: fixed; 
-  background-repeat: no-repeat; 
-  height: 100vh; 
+body {
   margin: 0; 
-} */
+}
 /* Default Landing Page Background */
 .landing-bg {
   background-image: url("../src/assets/images/Landing.png");
