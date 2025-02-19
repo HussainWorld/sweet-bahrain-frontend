@@ -39,7 +39,7 @@ const SignUpForm = () => {
 
   return (
     <main>
-      <h1>Sign Up</h1>
+      {/* <img src={SignUpImg} /> */}
       <p>{message}</p>
       <form onSubmit={handleSubmit}>
         <div>

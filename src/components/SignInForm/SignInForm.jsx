@@ -35,7 +35,6 @@ const SignInForm = () => {
 
   return (
     <main>
-      <h1>Sign In</h1>
       <p>{message}</p>
       <form autoComplete='off' onSubmit={handleSubmit}>
         <div>
