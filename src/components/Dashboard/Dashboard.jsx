@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-// import { UserContext } from '../../contexts/UserContext';
-// import { ProductContext } from '../../contexts/ProductContext';
 import { useNavigate } from 'react-router';
-import * as productService from '../../services/productService'
+import * as productService from '../../services/productService';
+import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Dashboard = () => {
-  // const { user } = useContext(UserContext);
-  // const { product } = useContext(ProductContext);
   const [productsList, setProductsList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleProductClick = (productId) => {
@@ -16,32 +16,50 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchingProducts = async () => {
+      setLoading(true);
       try {
-        const fetchedProducts = await productService.index()
-        setProductsList(fetchedProducts)
-        localStorage.setItem('products', JSON.stringify(fetchedProducts))
+        const cachedProducts = localStorage.getItem('products');
+        if (cachedProducts) {
+          setProductsList(JSON.parse(cachedProducts));
+        } else {
+          const fetchedProducts = await productService.index();
+          setProductsList(fetchedProducts);
+          localStorage.setItem('products', JSON.stringify(fetchedProducts));
+        }
       } catch (err) {
-        console.log(err)
+        setError('Failed to load products. Please try again.');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
-    }
-    
-    fetchingProducts()
-  }, [])
+    };
+
+    fetchingProducts();
+  }, []);
 
   return (
-    <main>
-      {productsList.map((prdObj) => (
-        <div 
-          key={prdObj._id} 
-          onClick={() => handleProductClick(prdObj._id)}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={prdObj.image} alt={prdObj.name} />
-          <h4>{prdObj.name} BHD {prdObj.price}</h4>
-        </div>
-      ))}
+    <main style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center", padding: "20px" }}>
+      {loading ? (
+        <Spinner animation="border" />
+      ) : error ? (
+        <p style={{ color: 'red' }}>{error}</p>
+      ) : productsList.length === 0 ? (
+        <p>No products available</p>
+      ) : (
+        productsList.map((prdObj) => (
+          <div key={prdObj._id} onClick={() => handleProductClick(prdObj._id)} style={{ cursor: "pointer" }}>
+            <Card style={{ width: "14.4rem" }}>
+              <Card.Img variant="top" src={prdObj.image} />
+              <Card.Body>
+                <Card.Title>{prdObj.name} - BHD {prdObj.price}</Card.Title>
+                <Card.Text>{prdObj.description || "No description available."}</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        ))
+      )}
     </main>
   );
 };
 
-export default Dashboard
+export default Dashboard;
