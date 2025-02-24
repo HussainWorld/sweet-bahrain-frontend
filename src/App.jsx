@@ -6,6 +6,7 @@ import Landing from './components/Landing/Landing';
 import SignInForm from './components/SignInForm/SignInForm';
 import Dashboard from './components/Dashboard/Dashboard';
 import Checkout from './components/Checkout/Checkout';
+import EditProduct from './components/EditProduct/EditProduct';
 import { UserContext } from './contexts/UserContext';
 import './App.css';
 
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/sign-in" element={<SignInForm />} />
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/checkout/:productId" element={<Checkout />} />
+        <Route path="/edit-product/:productId" element={<EditProduct />} />
       </Routes>
     </>
   );

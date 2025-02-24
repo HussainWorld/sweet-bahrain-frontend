@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router';
 import * as productService from '../../services/productService';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
+// import { UserContext } from '../../contexts/UserContext'
+// import { useContext } from 'react'
 
 const Dashboard = () => {
   const [productsList, setProductsList] = useState([]);
@@ -10,7 +12,25 @@ const Dashboard = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // const { user, setUser } = useContext(UserContext);
+
+  // let isAdmin
+	// if (user) {
+	// 	const userType = user.userType;
+	// 	isAdmin = userType == 'admin'
+	// };
+
+  // const handleSignOut = () => {
+	// 	localStorage.removeItem('token');
+	// 	setUser(null);
+	// };
+
   const handleProductClick = (productId) => {
+    // if(isAdmin == 'admin'){
+    //   navigate(`/edit-product`);
+    // }else{
+    //   navigate(`/checkout/${productId}`);
+    // }
     navigate(`/checkout/${productId}`);
   };
 
