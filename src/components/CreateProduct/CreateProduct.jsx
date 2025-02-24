@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { create } from '../../services/productService';
 
-import { create } from '../../services/productService'
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { Button } from 'react-bootstrap';
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -40,49 +43,58 @@ const CreateProduct = () => {
 
   return (
     <main>
-      <h1>{message}</h1>
+      <p>{message}</p>
+
+
       <form autoComplete='off' onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='name'>Name:</label>
-          <input
-            type='text'
-            autoComplete='off'
-            id='name'
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="inputGroup-sizing-default">Name</InputGroup.Text>
+          <Form.Control
+            type="text"
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            id="name"
+            name="name"
             value={formData.name}
-            name='name'
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label htmlFor='price'>Price:</label>
-          <input
-            type='text'
-            autoComplete='off'
-            id='price'
+        </InputGroup>
+
+        <InputGroup className="mb-3">
+          <InputGroup.Text>$</InputGroup.Text>
+          <Form.Control
+            type="text"
+            aria-label="Dollar amount (with dot and two decimal places)"
+            id="price"
+            name="price"
             value={formData.price}
-            name='price'
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <label htmlFor='quantity'>Quantity:</label>
-          <input
-            type='text'
-            autoComplete='off'
-            id='quantity'
+        </InputGroup>
+
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="inputGroup-sizing-default">Quantity</InputGroup.Text>
+          <Form.Control
+            type="text"
+            aria-label="Default"
+            aria-describedby="inputGroup-sizing-default"
+            id="quantity"
+            name="quantity"
             value={formData.quantity}
-            name='quantity'
             onChange={handleChange}
             required
           />
+
+        </InputGroup>
+
+        <div className="d-flex gap-2">
+          <Button variant="primary" type="submit">Add Product</Button>
+          <Button variant="secondary" onClick={() => navigate('/')}>Cancel</Button>
         </div>
-        <div>
-          <button>Add Products</button>
-          <button onClick={() => navigate('/')}>Cancel</button>
-        </div>
-      </form>
+      
+        </form>
     </main>
   );
 };
