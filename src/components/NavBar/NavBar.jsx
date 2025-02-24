@@ -30,8 +30,9 @@ const NavBar = () => {
 								{isAdmin ? (
 									<>
 										<Navbar.Text className="ms-3">
-											Welcome Admin, {user.username}
+											Welcome, {user.username}
 										</Navbar.Text>
+                                <Nav.Link as={Link} to="/admin-dashboard">Admin Dashboard</Nav.Link>
 								<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
 								<Nav.Link as={Link} to="/" onClick={handleSignOut}>
 									Sign Out
