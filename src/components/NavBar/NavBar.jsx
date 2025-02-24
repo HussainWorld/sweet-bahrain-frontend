@@ -18,7 +18,7 @@ const NavBar = () => {
 	};
 
 	return (
-		<Navbar bg="light" variant="light" expand="lg" fixed="top"> {/* Fixed at top */}
+		<Navbar bg="light" variant="light" expand="lg" fixed="top" > {/* Fixed at top */}
 			<Container>
 				<Navbar.Brand as={Link} to="/">MyApp</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -64,5 +64,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-

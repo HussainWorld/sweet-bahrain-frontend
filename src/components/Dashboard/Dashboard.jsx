@@ -47,12 +47,29 @@ const Dashboard = () => {
         <p>No products available</p>
       ) : (
         productsList.map((prdObj) => (
-          <div key={prdObj._id} onClick={() => handleProductClick(prdObj._id)} style={{ cursor: "pointer" }}>
-            <Card style={{ width: "14.4rem" }}>
-              <Card.Img variant="top" src={prdObj.image} />
-              <Card.Body>
-                <Card.Title>{prdObj.name} - BHD {prdObj.price}</Card.Title>
-                <Card.Text>{prdObj.description || "No description available."}</Card.Text>
+          <div 
+            key={prdObj._id} 
+            onClick={() => handleProductClick(prdObj._id)} 
+            style={{ cursor: "pointer" }}
+          >
+            <Card style={{ width: "16rem", height: "16rem", display: "flex", flexDirection: "column" }}>
+              {}
+              <Card.Img 
+                variant="top" 
+                src={prdObj.image} 
+                style={{ width: "100%", height: "60%", objectFit: "cover" }} 
+              />
+              <Card.Body style={{ flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "12px" }}>
+                <Card.Title style={{ width: "100%", fontSize: "16px", fontWeight: "bold", whiteSpace: "normal" }}>
+                  {prdObj.name}
+                </Card.Title>
+                <Card.Title style={{ width: "100%", fontSize: "16px", fontWeight: "bold", whiteSpace: "normal" }}>
+                  BHD {prdObj.price}
+                </Card.Title>
+
+                <Card.Text style={{ width: "100%", fontSize: "14px", whiteSpace: "normal", overflowWrap: "break-word" }}>
+                  {prdObj.description || "No description available."}
+                </Card.Text>
               </Card.Body>
             </Card>
           </div>
@@ -63,3 +80,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
