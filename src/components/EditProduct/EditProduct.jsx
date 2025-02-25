@@ -42,13 +42,13 @@ const EditProduct = () => {
     evt.preventDefault();
     try {
       const price = parseFloat(product.price);
-      if(!Number.isInteger(price)){
-        throw new Error( 'Price must be an integer')
+      if (isNaN(price)) {
+        throw new Error('Price must be a number');
       }
-
+    
       const quantity = parseFloat(product.quantity);
-      if(!Number.isInteger(quantity)){
-        throw new Error( 'Quantity must be an integer')
+      if (isNaN(quantity)) {
+        throw new Error('Quantity must be a number');
       }
 
       const formData = {
