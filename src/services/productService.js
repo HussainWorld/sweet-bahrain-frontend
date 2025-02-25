@@ -63,6 +63,8 @@ const getProduct = async (productId) => {
         throw new Error(err)
     }
 }
+
+
 const edit = async (formData) => {
     try {
         const { productId, ...body } = formData;
@@ -94,5 +96,5 @@ export {
     index,
     create,
     edit,
-    getProduct
+    getProduct,
 }

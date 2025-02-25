@@ -34,6 +34,7 @@ const NavBar = () => {
 										</Navbar.Text>
                                 <Nav.Link as={Link} to="/admin-dashboard">Admin Dashboard</Nav.Link>
 								<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
+                                <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
 								<Nav.Link as={Link} to="/" onClick={handleSignOut}>
 									Sign Out
 								</Nav.Link>
