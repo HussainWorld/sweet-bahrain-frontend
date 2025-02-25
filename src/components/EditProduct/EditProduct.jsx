@@ -1,41 +1,66 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { create } from '../../services/productService';
+import { edit, getProduct } from '../../services/productService';
 
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
+import { useParams } from 'react-router';
+
 
 const EditProduct = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
-  const [formData, setFormData] = useState({
+  const [product, setProduct] = useState({
     name: '',
     price: '',
     quantity: '',
   });
 
+  const { productId } = useParams();
+
+  useEffect(() => {
+    const fetchingProduct = async () => {
+      try {
+          const fetchedProduct = await getProduct(productId);
+          setProduct(fetchedProduct);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchingProduct();
+  }, []);
+
+  
   const handleChange = (evt) => {
     setMessage('');
-    setFormData({ ...formData, [evt.target.name]: evt.target.value });
+    setProduct({ ...product, [evt.target.name]: evt.target.value });
   };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const price = parseFloat(formData.price);
+      const price = parseFloat(product.price);
       if(!Number.isInteger(price)){
         throw new Error( 'Price must be an integer')
       }
 
-      const quantity = parseFloat(formData.quantity);
+      const quantity = parseFloat(product.quantity);
       if(!Number.isInteger(quantity)){
         throw new Error( 'Quantity must be an integer')
       }
 
-      await create ({ name: formData.name, price, quantity });
-      throw new Error( 'Product added successfully')
+      const formData = {
+        name: product.name,
+        price: price,
+        quantity: quantity,
+        productId: productId
+      }
 
+      await edit ( formData );
+      navigate(`/`);
+      throw new Error( 'Product edited successfully')
     } catch (err) {
       setMessage(err.message);
     }
@@ -55,7 +80,7 @@ const EditProduct = () => {
             aria-describedby="inputGroup-sizing-default"
             id="name"
             name="name"
-            value={formData.name}
+            value={product.name}
             onChange={handleChange}
             required
           />
@@ -68,7 +93,7 @@ const EditProduct = () => {
             aria-label="Dollar amount (with dot and two decimal places)"
             id="price"
             name="price"
-            value={formData.price}
+            value={product.price}
             onChange={handleChange}
             required
           />
@@ -82,7 +107,7 @@ const EditProduct = () => {
             aria-describedby="inputGroup-sizing-default"
             id="quantity"
             name="quantity"
-            value={formData.quantity}
+            value={product.quantity}
             onChange={handleChange}
             required
           />
@@ -90,7 +115,7 @@ const EditProduct = () => {
         </InputGroup>
 
         <div className="d-flex gap-2">
-          <Button variant="primary" type="submit">Add Product</Button>
+          <Button variant="primary" type="submit">Edit Product</Button>
           <Button variant="secondary" onClick={() => navigate('/')}>Cancel</Button>
         </div>
       

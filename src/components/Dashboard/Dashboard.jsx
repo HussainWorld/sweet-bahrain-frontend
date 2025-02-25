@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import * as productService from '../../services/productService';
+import { index } from '../../services/productService';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
-// import { UserContext } from '../../contexts/UserContext'
-// import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+import { useContext } from 'react'
 
 const Dashboard = () => {
   const [productsList, setProductsList] = useState([]);
@@ -12,26 +12,21 @@ const Dashboard = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  // let isAdmin
-	// if (user) {
-	// 	const userType = user.userType;
-	// 	isAdmin = userType == 'admin'
-	// };
-
-  // const handleSignOut = () => {
-	// 	localStorage.removeItem('token');
-	// 	setUser(null);
-	// };
+  let isAdmin
+	if (user) {
+		const userType = user.userType;
+		isAdmin = userType == 'admin'
+	};
 
   const handleProductClick = (productId) => {
-    // if(isAdmin == 'admin'){
-    //   navigate(`/edit-product`);
-    // }else{
-    //   navigate(`/checkout/${productId}`);
-    // }
-    navigate(`/checkout/${productId}`);
+    if(isAdmin){
+      navigate(`/edit-product/${productId}`);
+    }else{
+      alert(isAdmin)
+      navigate(`/checkout/${productId}`);
+    }
   };
 
   useEffect(() => {
@@ -42,7 +37,7 @@ const Dashboard = () => {
         if (cachedProducts) {
           setProductsList(JSON.parse(cachedProducts));
         } else {
-          const fetchedProducts = await productService.index();
+          const fetchedProducts = await index();
           setProductsList(fetchedProducts);
           localStorage.setItem('products', JSON.stringify(fetchedProducts));
         }
