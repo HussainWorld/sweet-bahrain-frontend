@@ -32,12 +32,8 @@ const NavBar = () => {
 										<Navbar.Text className="ms-3">
 											Welcome, {user.username}
 										</Navbar.Text>
-                                <Nav.Link as={Link} to="/admin-dashboard">Admin Dashboard</Nav.Link>
-								<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
-                                <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
-								<Nav.Link as={Link} to="/" onClick={handleSignOut}>
-									Sign Out
-								</Nav.Link>
+                                        <Nav.Link as={Link} to="/admin-dashboard">Admin Dashboard</Nav.Link>
+                                        <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
 										<Nav.Link as={Link} to="/create-product">Create Product</Nav.Link>
 										<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
 										<Nav.Link as={Link} to="/" onClick={handleSignOut}>
@@ -60,7 +56,7 @@ const NavBar = () => {
 							<>
 								<Nav.Link as={Link} to="/sign-up">Sign Up</Nav.Link>
 								<Nav.Link as={Link} to="/sign-in">Sign In</Nav.Link>
-								<Nav.Link as={Link} to="/">Home</Nav.Link>
+								{/* <Nav.Link as={Link} to="/">Home</Nav.Link> */}
 							</>
 						)}
 					</Nav>

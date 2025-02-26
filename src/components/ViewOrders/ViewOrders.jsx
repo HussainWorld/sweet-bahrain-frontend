@@ -3,27 +3,39 @@ import { Container, Card, Spinner, Alert } from 'react-bootstrap';
 import { getOrders } from '../../services/orderService';
 import { getProduct } from '../../services/productService';
 
+// import { getUser } from '../../services/userService';
+
 const ViewOrders = () => {
   const [ordersList, setOrdersList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [productDetails, setProductDetails] = useState({});
 
+  // const [ userDetails , setUserDetails ] = useState({})
+
   useEffect(() => {
-    const fetchOrdersAndProducts = async () => {
+    const fetchOrdersAndProductsAndUsers = async () => {
       setLoading(true);
       try {
         
         const ordersData = await getOrders();
         setOrdersList(ordersData);
-
         
         const productsInfo = {};
+        // const usersInfo = {};
+
         for (const order of ordersData) {
           const productData = await getProduct(order.product);
           productsInfo[order.product] = productData;
+
+          // if (order.user && !usersInfo[order.user]){
+          //   usersInfo[order.user] = await getUser(order.user)
+          // }
         }
         setProductDetails(productsInfo);
+        // setUserDetails(usersInfo);
+
+
       } catch (err) {
         setError('Failed to load orders. Please try again.');
         console.error(err);
@@ -32,7 +44,7 @@ const ViewOrders = () => {
       }
     };
 
-    fetchOrdersAndProducts();
+    fetchOrdersAndProductsAndUsers();
   }, []);
 
   const formatDate = (date) => {
@@ -69,6 +81,8 @@ const ViewOrders = () => {
                   {productDetails[order.product]?.price}
                   <br />
                   <strong>Date:</strong> {order?.orderDate ? formatDate(order?.orderDate) : 'N/A'}
+                  <br />
+                  {/* <strong>Ordered by:</strong> {userDetails[order.user]?.name || 'Unknown'} */}
                 </Card.Text>
               </Card.Body>
               <Card.Footer>
