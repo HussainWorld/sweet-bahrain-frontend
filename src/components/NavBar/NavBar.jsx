@@ -20,7 +20,7 @@ const NavBar = () => {
 	return (
 		<Navbar bg="light" variant="light" expand="lg" fixed="top" > {/* Fixed at top */}
 			<Container>
-				<Navbar.Brand as={Link} to="/">MyApp</Navbar.Brand>
+				<Navbar.Brand as={Link} to="/">Sweet Bahrain</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="ms-auto">
@@ -32,23 +32,23 @@ const NavBar = () => {
 										<Navbar.Text className="ms-3">
 											Welcome, {user.username}
 										</Navbar.Text>
-                                <Nav.Link as={Link} to="/admin-dashboard">Admin Dashboard</Nav.Link>
-								<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
-								<Nav.Link as={Link} to="/" onClick={handleSignOut}>
-									Sign Out
-								</Nav.Link>
+										<Nav.Link as={Link} to="/create-product">Create Product</Nav.Link>
+										<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
+										<Nav.Link as={Link} to="/" onClick={handleSignOut}>
+											Sign Out
+										</Nav.Link>
 									</>
 								) : (
 									<>
-									<Navbar.Text className="ms-3">
-									Welcome, {user.username}
-								</Navbar.Text>					
-								<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
-								<Nav.Link as={Link} to="/" onClick={handleSignOut}>
-									Sign Out
-								</Nav.Link>
-								</>
-					)}
+										<Navbar.Text className="ms-3">
+											Welcome, {user.username}
+										</Navbar.Text>
+										<Nav.Link as={Link} to="/">Dashboard</Nav.Link>
+										<Nav.Link as={Link} to="/" onClick={handleSignOut}>
+											Sign Out
+										</Nav.Link>
+									</>
+								)}
 							</>
 						) : (
 							<>
