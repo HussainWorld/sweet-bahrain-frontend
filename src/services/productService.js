@@ -90,9 +90,32 @@ const edit = async (formData) => {
     }
 };
 
+
+const remove = async (productId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${productId}`, {
+            method: 'DELETE',
+            headers: { 
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            throw new Error(data.message || 'Failed to delete product');
+        }
+
+        return { message: 'Product deleted successfully' };
+    } catch (err) {
+        console.error('Delete Error:', err);
+        throw new Error(err.message);
+    }
+};
+
 export {
     index,
     create,
     edit,
-    getProduct
+    getProduct,
+    remove,
 }

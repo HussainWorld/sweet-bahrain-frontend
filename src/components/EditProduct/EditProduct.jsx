@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router";
-import { edit, getProduct } from "../../services/productService";
+import { edit, getProduct, remove } from "../../services/productService";
 import { ProductContext } from "../../contexts/ProductContext";
 import { Container, Row, Col, Card, Form, InputGroup, Button, Alert, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const EditProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  const { products, setProducts } = useContext(ProductContext); // Context for real-time updates
+  const { products, setProducts } = useContext(ProductContext);
 
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("danger");
@@ -43,8 +43,28 @@ const EditProduct = () => {
 
   const handleChange = (evt) => {
     setMessage("");
-    setErrors({ ...errors, [evt.target.name]: "" }); // Clear errors when user types
+    setErrors({ ...errors, [evt.target.name]: "" });
     setProduct({ ...product, [evt.target.name]: evt.target.value });
+  };
+
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await remove(productId);
+
+        const updatedProducts = products.filter((p) => p._id !== productId);
+        setProducts(updatedProducts);
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
+  
+        alert("Product deleted successfully!");
+  
+        navigate("/");
+      } catch (err) {
+        setMessage(err.message);
+        setMessageType("danger");
+      }
+    }
   };
 
   const validateInputs = () => {
@@ -174,6 +194,9 @@ const EditProduct = () => {
                     <div className="d-grid gap-2">
                       <Button variant="primary" type="submit">
                         Save Changes
+                      </Button>
+                      <Button variant="danger" onClick={handleDelete}>
+                      Delete Product
                       </Button>
                       <Button variant="secondary" onClick={() => navigate("/")}>
                         Cancel
