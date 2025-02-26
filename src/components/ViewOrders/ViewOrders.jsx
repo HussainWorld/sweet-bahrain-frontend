@@ -3,54 +3,53 @@ import { Container, Card, Spinner, Alert } from 'react-bootstrap';
 import { getOrders } from '../../services/orderService';
 import { getProduct } from '../../services/productService';
 
-// import { getUser } from '../../services/userService';
-
 const ViewOrders = () => {
   const [ordersList, setOrdersList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [productDetails, setProductDetails] = useState({});
 
-  // const [ userDetails , setUserDetails ] = useState({})
-
   useEffect(() => {
-    const fetchOrdersAndProductsAndUsers = async () => {
+    const fetchOrdersAndProducts = async () => {
       setLoading(true);
+      setError('');
+
       try {
-        
         const ordersData = await getOrders();
-        setOrdersList(ordersData);
-        
-        const productsInfo = {};
-        // const usersInfo = {};
-
-        for (const order of ordersData) {
-          const productData = await getProduct(order.product);
-          productsInfo[order.product] = productData;
-
-          // if (order.user && !usersInfo[order.user]){
-          //   usersInfo[order.user] = await getUser(order.user)
-          // }
+        if (!ordersData || ordersData.length === 0) {
+          setOrdersList([]);
+          setLoading(false);
+          return;
         }
+        setOrdersList(ordersData);
+
+        const productPromises = ordersData.map((order) =>
+          getProduct(order.product).catch(() => null)
+        );
+        const productsData = await Promise.all(productPromises);
+
+        const productsInfo = {};
+        ordersData.forEach((order, index) => {
+          if (productsData[index]) {
+            productsInfo[order.product] = productsData[index];
+          }
+        });
+
         setProductDetails(productsInfo);
-        // setUserDetails(usersInfo);
-
-
       } catch (err) {
-        setError('Failed to load orders. Please try again.');
-        console.error(err);
+        setError(`Failed to load orders. Please try again. Error: ${err.message}`);
+        console.error('Error fetching orders:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOrdersAndProductsAndUsers();
+    fetchOrdersAndProducts();
   }, []);
 
   const formatDate = (date) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const formattedDate = new Date(date).toLocaleDateString('en-GB', options);
-    return formattedDate;
+    return new Date(date).toLocaleDateString('en-GB', options);
   };
 
   return (
@@ -62,34 +61,37 @@ const ViewOrders = () => {
 
       <div className="d-flex flex-wrap justify-content-center gap-3">
         {ordersList.length > 0 ? (
-          ordersList.map((order) => (
-            <Card key={order._id} style={{ width: '300px' }} className="shadow-sm">
-              <Card.Body>
-              <Card.Title>
-                  {productDetails[order.product]?.image && (
-                    <img
-                      src={productDetails[order.product]?.image}
-                      alt={order._id}
-                      style={{ width: '200px', height: '200px', objectFit: 'cover' }}
-                    />
-                  )}
-                </Card.Title>
-                <Card.Text>
-                  <strong>{productDetails[order.product]?.name}</strong>
-                  <br />
-                  <strong>Total Price:</strong> BHD:
-                  {productDetails[order.product]?.price}
-                  <br />
-                  <strong>Date:</strong> {order?.orderDate ? formatDate(order?.orderDate) : 'N/A'}
-                  <br />
-                  {/* <strong>Ordered by:</strong> {userDetails[order.user]?.name || 'Unknown'} */}
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer>
-                <strong>Status:</strong> {order?.status}
-              </Card.Footer>
-            </Card>
-          ))
+          ordersList.map((order) => {
+            const product = productDetails[order.product];
+
+            return (
+              <Card key={order._id} style={{ width: '300px' }} className="shadow-sm">
+                <Card.Body>
+                  <Card.Title>
+                    {product?.image && (
+                      <img
+                        src={product.image}
+                        alt={product.name || 'Product'}
+                        style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                      />
+                    )}
+                  </Card.Title>
+                  <Card.Text>
+                    <strong>{product?.name || 'Unknown Product'}</strong>
+                    <br />
+                    <strong>Total Price:</strong> BHD {product?.price || 'N/A'}
+                    <br />
+                    <strong>Date:</strong> {order?.orderDate ? formatDate(order.orderDate) : 'N/A'}
+                    <br />
+                    <strong>Ordered by:</strong> {order?.orderedBy || 'Unknown'}
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <strong>Status:</strong> {order?.status || 'Unkown'}
+                </Card.Footer>
+              </Card>
+            );
+          })
         ) : (
           !loading && <p className="text-center">No orders found.</p>
         )}
