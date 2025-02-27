@@ -101,7 +101,6 @@ const EditProduct = () => {
 
       await edit(formData);
 
-      // ✅ Update Product Context for Real-Time UI Update
       const updatedProducts = products.map((p) =>
         p._id === productId ? { ...p, ...formData } : p
       );
@@ -111,7 +110,7 @@ const EditProduct = () => {
       setMessage("Product updated successfully!");
       setMessageType("success");
 
-      setTimeout(() => navigate("/"), 1500); // Redirect after 1.5 seconds
+      setTimeout(() => navigate("/"), 1500);
 
     } catch (err) {
       setMessage(err.message);
@@ -214,3 +213,4 @@ const EditProduct = () => {
 };
 
 export default EditProduct;
+

@@ -21,4 +21,29 @@ const create = async (productId) => {
   }
 }
 
-export { create }
+const getOrders = async () => {
+  try{
+    const res = await fetch(BASE_URL, {
+      method: 'GET',
+      headers: {
+        'Const-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem*('token')}`
+      }
+    });
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data.err || 'Failed to fetch orders');
+    }
+    
+    return data;
+
+  }catch(err){
+    throw new Error(err.message)
+  }
+}
+
+
+
+export { create, getOrders }
