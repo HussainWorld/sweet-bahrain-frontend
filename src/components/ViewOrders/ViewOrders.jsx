@@ -82,8 +82,6 @@ const ViewOrders = () => {
                     <strong>Total Price:</strong> BHD {product?.price || 'N/A'}
                     <br />
                     <strong>Date:</strong> {order?.orderDate ? formatDate(order.orderDate) : 'N/A'}
-                    <br />
-                    <strong>Ordered by:</strong> {order?.orderedBy || 'Unknown'}
                   </Card.Text>
                 </Card.Body>
                 <Card.Footer>

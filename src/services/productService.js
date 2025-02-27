@@ -1,3 +1,4 @@
+
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/products`
 
 const index = async () => {
@@ -63,8 +64,6 @@ const getProduct = async (productId) => {
         throw new Error(err)
     }
 }
-
-
 const edit = async (formData) => {
     try {
         const { productId, ...body } = formData;
@@ -92,9 +91,32 @@ const edit = async (formData) => {
     }
 };
 
+
+const remove = async (productId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${productId}`, {
+            method: 'DELETE',
+            headers: { 
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (!res.ok) {
+            const data = await res.json();
+            throw new Error(data.message || 'Failed to delete product');
+        }
+
+        return { message: 'Product deleted successfully' };
+    } catch (err) {
+        console.error('Delete Error:', err);
+        throw new Error(err.message);
+    }
+};
+
 export {
     index,
     create,
     edit,
     getProduct,
+    remove,
 }
