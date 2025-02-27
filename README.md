@@ -17,7 +17,7 @@ Sweet Bahrain is a full-stack e-commerce platform designed for ordering sweets. 
 Sweet Bahrain was created to provide a seamless online shopping experience for customers looking to order traditional and modern sweets. The goal was to build a user-friendly platform that allows users to easily browse products, place orders, and manage their accounts. The project also aimed to provide admin users with tools to manage products and orders efficiently.
 
 ---
-
+ 
 ## Getting Started
 
 - **Deployed App**: [Sweet Bahrain](https://sweet-bahrain-frontend-git-main-fares-yusufs-projects.vercel.app/)
